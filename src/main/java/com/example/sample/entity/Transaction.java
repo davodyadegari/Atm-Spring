@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -18,15 +19,18 @@ import java.util.List;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(nullable = false)
+    private Integer id;
+    @Column(nullable = false,name = "amount")
     private Double amount;
 
-    @Column(nullable = false)
-    private Date date;
-    @ManyToOne
-    @JoinColumn(name = "account_id")
+    @Column(name = "date")
+    private LocalDate date;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id",nullable = false)
     private Account account;
+//       @Column(nullable = false,name = "transaction_type")
+//       @Enumerated(value = EnumType.STRING)
+//    private TransactionType transactionType;
     @Basic
     @Column(nullable = false)
     private Integer transactionTypeValue;
@@ -47,13 +51,22 @@ public class Transaction {
             this.transactionTypeValue = transactionType.getValue();
         }
     }
-
-    public Transaction(Long id, Double amount, Date date, Integer transactionTypeValue, TransactionType transactionType) {
-        this.id = id;
+//@PrePersist
+    public void beforePersist(){
+        this.date=LocalDate.now();
+    }
+    public Transaction(Integer id,Double amount, TransactionType transactionType,Account account) {
         this.amount = amount;
-        this.date = date;
-        this.transactionTypeValue = transactionTypeValue;
+        this.id=id;
+        this.account=account;
         this.transactionType = transactionType;
+
+    }
+    public Transaction(Double amount, TransactionType transactionType) {
+
+//        this.account=account;
+        this.transactionType = transactionType;
+
     }
 
     @Override
@@ -62,7 +75,6 @@ public class Transaction {
                 "id=" + id +
                 ", amount=" + amount +
                 ", date=" + date +
-                ", transactionTypeValue=" + transactionTypeValue +
                 ", transactionType=" + transactionType +
                 '}';
     }

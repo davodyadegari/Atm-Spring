@@ -37,9 +37,9 @@ public class AccountServiceImpl implements AccountService {
     public List<Account> findAll(){
         return accountRepository.findAll();
     }
-    public Account createAccount(User user, String password, Integer type) {
-        AccountType accountType = AccountType.of(type);
-        Account account = new Account(user, password, accountType);
+    public Account createAccount(User user, String password, Integer accountTypeValue) {
+        AccountType accountType = AccountType.of(accountTypeValue);
+        Account account = new Account(user, password, accountType,accountTypeValue);
         accountRepository.save(account);
         return account;
     }

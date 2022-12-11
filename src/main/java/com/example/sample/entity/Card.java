@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 @Entity
 @Table(name = "cards")
@@ -18,12 +19,24 @@ public class Card {
     private Long id;
     @Column(name = "card_number",unique = true,nullable = false,length = 16)
     private String cardNumber;
-    @Column(nullable = false,length = 4,unique = true)
+    @Column(nullable = false,length = 4)
     private String cvv2;
     @Column(name = "expired_date",nullable = false)
     private LocalDate expiredDate;
-    @Column(nullable = false,length = 4,unique = true)
+    @Column(nullable = false,length = 4)
     private String password;
+    public Card(String password) {
+        Random random = new Random();
+        Long num = random.nextLong(10000000,99999999);
+        this.cardNumber = "50730819"+num;
+        this.cvv2 = String.valueOf(random.nextInt(4));
+        this.expiredDate = LocalDate.now().plusYears(3);
+        this.password = password;
+        this.cardNumber=cardNumber;
+    }
+    public boolean validation(String pass){
+        return pass.equals(this.password);
+    }
 //    @OneToOne(mappedBy = "card",fetch = FetchType.EAGER)
 //    private Account account;
 //

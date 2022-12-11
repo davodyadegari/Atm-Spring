@@ -19,14 +19,20 @@ public class User {
     private Long id;
     @Column(name = "name",length = 20,nullable = false)
     private String name;
-    @Column(length = 24,nullable = false)
+    @Column(length = 24,nullable = false,name = "family")
     private String family;
     @Column(nullable = false)
     private Integer age;
-    @Column(length = 10,nullable = false,unique = true)
+    @Column(length = 10,nullable = false,unique = true,name = "national_code")
     private String nationalCode;
-    @Column(nullable = false)
-    private LocalDate birthDay;
+    @Column(nullable = false,name = "birth_date",length = 25)
+    private LocalDate birthDate;
+
+    public User(Long id, String name, String family, String nationalCode, LocalDate birthDay) {
+    }
+
+//    public User(Long id, String name, String family, String nationalCode, LocalDate birthDay) {
+//    }
 //    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 //    private List<Account> accounts;
 //

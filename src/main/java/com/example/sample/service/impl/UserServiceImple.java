@@ -9,6 +9,7 @@ import com.example.sample.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class UserServiceImple implements UserService {
@@ -18,7 +19,7 @@ public class UserServiceImple implements UserService {
         this.userRepository = userRepository;
     }
     @Override
-    public User createUser(String name, String family, String nationalCode, LocalDate birthDay) {
+    public User createUser(Long id,String name, String family, String nationalCode, LocalDate birthDay) {
 
 
         if (userRepository.findByNationalCode(nationalCode).isPresent()){
@@ -27,7 +28,7 @@ public class UserServiceImple implements UserService {
 
         if (birthDay.getYear() < 18)
             throw new AgeException();
-        User user = new User(null,name, family, nationalCode, birthDay);
+        User user = new User(id,name, family, nationalCode, birthDay);
 
         return userRepository.save(user);
     }
@@ -40,5 +41,10 @@ public class UserServiceImple implements UserService {
     @Override
     public void save(User user){
       userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

@@ -3,7 +3,7 @@ package com.example.sample.entity.enumm;
 import java.util.stream.Stream;
 
 public enum TransactionType {
-    DEPOSIT(1),WITHDRAW(2);
+    DEPOSIT(2),WITHDRAW(1);
 
     private Integer value;
 
