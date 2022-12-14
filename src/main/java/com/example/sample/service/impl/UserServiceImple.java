@@ -10,13 +10,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImple implements UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserServiceImple(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+    @Override
+    public Optional<User> findByNationalCode(String nationalCode){
+       return userRepository.findByNationalCode(nationalCode);
     }
     @Override
     public User createUser(Long id,String name, String family, String nationalCode, LocalDate birthDay) {

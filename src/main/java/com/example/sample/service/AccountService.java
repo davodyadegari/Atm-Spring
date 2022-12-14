@@ -12,6 +12,8 @@ public interface AccountService {
 
     List<Account> findAll();
 
+    Optional<Account>findByUser_NationalCode(String nationalCode);
+
 //    Optional<Account> findById(Integer id);
 //
 //    void delet(Account account);

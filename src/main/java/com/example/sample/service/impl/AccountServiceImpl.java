@@ -3,6 +3,7 @@ package com.example.sample.service.impl;
 import com.example.sample.Exeptions.InvalidPasswordException;
 import com.example.sample.Exeptions.NotFoundException;
 import com.example.sample.entity.Account;
+import com.example.sample.entity.Card;
 import com.example.sample.entity.User;
 import com.example.sample.entity.enumm.AccountType;
 import com.example.sample.repository.AccountRepository;
@@ -10,6 +11,7 @@ import com.example.sample.service.AccountService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -37,11 +39,15 @@ public class AccountServiceImpl implements AccountService {
     public List<Account> findAll(){
         return accountRepository.findAll();
     }
-    public Account createAccount(User user, String password, Integer accountTypeValue) {
+    public Account createAccount(User user, Card card, String password, Integer accountTypeValue) {
         AccountType accountType = AccountType.of(accountTypeValue);
-        Account account = new Account(user, password, accountType,accountTypeValue);
+        Account account = new Account(user,card, password, accountType,accountTypeValue);
         accountRepository.save(account);
         return account;
+    }
+    @Override
+public Optional<Account>findByUser_NationalCode(String nationalCode){
+        return accountRepository.findByUser_NationalCode(nationalCode);
     }
     public void moneyTransfer(String cardNum1, String cardNum2, double amount) {
         accountRepository.findByCard_CardNumber(cardNum1).ifPresentOrElse(account -> {

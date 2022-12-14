@@ -8,4 +8,6 @@ public interface CardService {
     void save(Card card);
 
     List<Card> findByCardNumber(String cardNumber);
+
+    List<Card>findAll();
 }

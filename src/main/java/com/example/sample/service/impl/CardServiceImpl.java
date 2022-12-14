@@ -22,4 +22,8 @@ public class CardServiceImpl implements CardService {
     public List<Card> findByCardNumber(String cardNumber){
         return cardRepository.findByCardNumber(cardNumber);
     }
+    @Override
+    public List<Card>findAll(){
+        return cardRepository.findAll();
+    }
 }

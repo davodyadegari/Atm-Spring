@@ -28,30 +28,30 @@ public class Transaction {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id",nullable = false)
     private Account account;
-//       @Column(nullable = false,name = "transaction_type")
-//       @Enumerated(value = EnumType.STRING)
-//    private TransactionType transactionType;
-    @Basic
-    @Column(nullable = false)
-    private Integer transactionTypeValue;
-    @Transient
-    @Column(nullable = false)
+       @Column(nullable = false,name = "transaction_type")
+       @Enumerated(value = EnumType.STRING)
     private TransactionType transactionType;
-
-    @PostLoad
-    void fillTransient() {
-        if (transactionTypeValue != null) {
-            this.transactionType = TransactionType.of(transactionTypeValue);
-        }
-    }
-
-    @PrePersist
-    void fillPersistent() {
-        if (transactionType != null) {
-            this.transactionTypeValue = transactionType.getValue();
-        }
-    }
-//@PrePersist
+//    @Basic
+//    @Column(name = "transaction_type_value",nullable = false)
+//    private Integer transactionTypeValue;
+//    @Transient
+//    @Column(nullable = false,name = "transaction_type")
+//    private TransactionType transactionType;
+//
+//    @PostLoad
+//    void fillTransient() {
+//        if (transactionTypeValue != null) {
+//            this.transactionType = TransactionType.of(transactionTypeValue);
+//        }
+//    }
+//
+//    @PrePersist
+//    void fillPersistent() {
+//        if (transactionType != null) {
+//            this.transactionTypeValue = transactionType.getValue();
+//        }
+//    }
+@PrePersist
     public void beforePersist(){
         this.date=LocalDate.now();
     }
@@ -63,8 +63,7 @@ public class Transaction {
 
     }
     public Transaction(Double amount, TransactionType transactionType) {
-
-//        this.account=account;
+        this.account=account;
         this.transactionType = transactionType;
 
     }
@@ -75,6 +74,7 @@ public class Transaction {
                 "id=" + id +
                 ", amount=" + amount +
                 ", date=" + date +
+                ", account=" + account +
                 ", transactionType=" + transactionType +
                 '}';
     }

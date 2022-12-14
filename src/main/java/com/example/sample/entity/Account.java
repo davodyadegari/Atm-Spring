@@ -3,6 +3,7 @@ package com.example.sample.entity;
 import com.example.sample.Exeptions.InvalidAmountException;
 import com.example.sample.entity.enumm.AccountType;
 import com.example.sample.entity.enumm.TransactionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Account {
     private String accountNumber;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",nullable = false)
+    @JsonIgnore
     private User user;
     @Column(name = "password",nullable = false,length = 20)
     private String password;
@@ -34,8 +36,10 @@ public class Account {
     private Double balance;
     @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "card_id")
+    @JsonIgnore
     private Card card;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "account")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "account",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Transaction>transactions;
 //    @Column(nullable = false,name = "account_type")
 //    @Enumerated(value = EnumType.STRING)
@@ -59,7 +63,7 @@ public class Account {
             this.accountTypeValue = accountType.getValue();
         }
     }
-    public Account(User user, String password, AccountType accountType,Integer accountTypeValue) {
+    public Account(User user,Card card, String password, AccountType accountType,Integer accountTypeValue) {
         Random random = new Random();
         this.id= random.nextLong();
         this.user = user;

@@ -49,26 +49,27 @@ public class SampleApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         User user=new User(2l,"davod","family",30,"4270269139",LocalDate.of(1992,01,11));
-        userService.save(user);
-        cardService.save(new Card("2523"));
-        Account account=new Account(user,"2523",AccountType.GHARZOL_HASANE,3);
+//        userService.save(user);
+       Card card= new Card("2523");
+//        cardService.save(card);
+        Account account=new Account(user,card,"2523",AccountType.GHARZOL_HASANE,3);
         List<Transaction>transactions=new ArrayList<>();
 //        account.setTransactions(transactions);
 
         Transaction transaction1=new Transaction(4,500.0, DEPOSIT,account);
-        accountService.save(account);
+//        accountService.save(account);
         transactionService.save(transaction1);
-//        Transaction transaction2=new Transaction(5,400.0, WITHDRAW,account);
-//        transactionService.save(transaction2);
-//        Transaction transaction3=new Transaction(6,300.0, DEPOSIT,account);
+       Transaction transaction2=new Transaction(5,400.0, WITHDRAW,account);
+//      transactionService.save(transaction2);
+      Transaction transaction3=new Transaction(6,300.0, DEPOSIT,account);
 //        transactionService.save(transaction3);
-//        transactions.add(transaction1);
-//        transactions.add(transaction2);transactions.add(transaction3);
+       transactions.add(transaction1);
+       transactions.add(transaction2);transactions.add(transaction3);
 
 //
 //       account.setTransactions(transactions);
         System.out.println(account.getId()+"++++++++++++++++++++++++++++++++");
-        accountService.save(account);
+//        transactionService.save(transaction1);
 
 //accountService.save(new Account("25232249"));
 //        System.out.println(accountService.getAccounts());
@@ -88,7 +89,8 @@ public class SampleApplication implements CommandLineRunner {
 //transactions.add(transaction2);
 //transactions.add(transaction);
 //        accountService.save(new Account(1l,"125789634985",user,"2523",300.0,card,transactions,1,JARI));
-//        System.out.println(accountService.findAll());
+        System.out.println(transactionService.findAll());
+        System.out.println(accountService.findAll());
 
     }
 }
