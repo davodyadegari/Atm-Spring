@@ -1,8 +1,8 @@
 package com.example.sample.controller;
 
+import com.example.sample.Mapper.AccountMapStruct;
 import com.example.sample.Mapper.AccountMapper;
 import com.example.sample.dto.AccountDto;
-import com.example.sample.entity.Account;
 import com.example.sample.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +16,14 @@ import java.util.Optional;
 @RestController
 public class AccountController {
     private final AccountService accountService;
-
-    public AccountController(AccountService accountService) {
+    private final AccountMapStruct accountMappStruct;
+    public AccountController(AccountService accountService, AccountMapStruct accountMappStruct) {
         this.accountService = accountService;
+        this.accountMappStruct = accountMappStruct;
     }
     @GetMapping("/accounts")
     public List<AccountDto>findAll(){
-        return AccountMapper.accountToAccountDto(accountService.findAll());
+        return accountMappStruct.toAccountDto(accountService.findAll());
     }
     @GetMapping("/account")
     public Optional<AccountDto>findByUser_NationalCode(@RequestParam("NATIONAL_CODE")@Valid String nationalCode){

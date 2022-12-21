@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account login(String cardNumber, String password) {
         Account account = this.accountRepository.findByCard_CardNumber(cardNumber).orElseThrow(() -> {
-            throw new NotFoundException("account not found");
+            throw new NotFoundException();
         });
         if (account.getCard().validation(password))
             return account;
@@ -55,7 +55,7 @@ public Optional<Account>findByUser_NationalCode(String nationalCode){
             account.withDraw(amount);
             account2.deposit(amount);
         }, () -> {
-            throw new NotFoundException("no account by this card number");
+            throw new NotFoundException();
         });
 
     }

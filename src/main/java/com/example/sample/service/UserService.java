@@ -9,6 +9,12 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> findByNationalCode(String nationalCode);
 
+
+
+    Optional<User> findById(Long id);
+
+    void deleteByName(String name);
+
     User createUser(Long id, String name, String family, String nationalCode, LocalDate birthDay);
 
     User findAccountByNationalCode(String nationalCode);

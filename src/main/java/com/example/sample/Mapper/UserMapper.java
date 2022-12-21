@@ -21,6 +21,9 @@ public class UserMapper {
         return optionalUserDto;
     }
     public static User toEntity(UserDto userDto){
-        return new User(null,userDto.getName(),userDto.getFamily(),userDto.getNationalCode(),userDto.getBirthday());
+        return new User(null,userDto.getName(),userDto.getFamily(), userDto.getAge(),userDto.getNationalCode(),userDto.getBirthday());
+    }
+    public static UserDto userToUserDto2(User user){
+        return new UserDto(user.getName(),user.getFamily(),user.getAge(),user.getNationalCode(),user.getBirthDate());
     }
 }

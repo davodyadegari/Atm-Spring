@@ -22,8 +22,10 @@ public class AccountDto {
 //    private Integer id;
 
 //    private final static Double MIN_BALANCE = 100d;
+//    @NotNull
+//    private CardDto cardDto;
     @NotNull
-    private User user;
+    private UserDto userDto;
     @NotNull
     @NotBlank
     private String accountNumber;

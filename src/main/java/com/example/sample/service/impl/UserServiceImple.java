@@ -2,6 +2,7 @@ package com.example.sample.service.impl;
 
 import com.example.sample.Exeptions.AgeException;
 import com.example.sample.Exeptions.InvalidInputException;
+import com.example.sample.Exeptions.NotComplteRequest;
 import com.example.sample.Exeptions.NotFoundException;
 import com.example.sample.entity.User;
 import com.example.sample.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,14 +23,25 @@ public class UserServiceImple implements UserService {
     }
     @Override
     public Optional<User> findByNationalCode(String nationalCode){
+        if(Objects.isNull(nationalCode)||Objects.equals(nationalCode,"")){
+            throw new NotComplteRequest();
+        }
        return userRepository.findByNationalCode(nationalCode);
+    }
+    @Override
+    public Optional<User> findById(Long id){
+        return userRepository.findById(id);
+    }
+    @Override
+    public void deleteByName(String name){
+        userRepository.deleteByName(name);
     }
     @Override
     public User createUser(Long id,String name, String family, String nationalCode, LocalDate birthDay) {
 
 
         if (userRepository.findByNationalCode(nationalCode).isPresent()){
-            throw new InvalidInputException("User already exist.");
+            throw new InvalidInputException();
         }
 
         if (birthDay.getYear() < 18)
@@ -40,7 +53,7 @@ public class UserServiceImple implements UserService {
     @Override
     public User findAccountByNationalCode(String nationalCode) {
 
-        return userRepository.findByNationalCode(nationalCode).orElseThrow(()->{throw new NotFoundException("");
+        return userRepository.findByNationalCode(nationalCode).orElseThrow(()->{throw new NotFoundException();
         }) ;
     }
     @Override
